@@ -2,7 +2,29 @@
 
 ## Mission
 
-Retrieve the right memories for the current user message and blend them into one coherent prompt so the LLM experiences a unified reality.
+Retrieve the right memories for the current user message and blend them into one
+coherent, authority-delimited context packet.
+
+“Unified” concerns response composition only. Items retain hidden provenance,
+confidence, time, and scope so uncertainty and conflicts remain available.
+
+```mermaid
+flowchart LR
+    Q[Analyzed cues] --> H[Hybrid candidates]
+    H --> V[Vector]
+    H --> T[Full text]
+    H --> F[Entity/time filters]
+    H --> R[Recent buffer]
+    H --> G[Bounded graph hops]
+    V --> M[Merge + normalize]
+    T --> M
+    F --> M
+    R --> M
+    G --> M
+    M --> C[Scope/conflict checks]
+    C --> D[Diversity rerank]
+    D --> B[Token-budget allocator]
+```
 
 ## Retrieval Sources
 
@@ -27,7 +49,10 @@ Use a weighted score based on:
 
 Starter formula:
 
-`score = 0.50 * semantic + 0.20 * recency + 0.15 * importance + 0.10 * emotion + 0.05 * association`
+`score = .36 semantic + .18 lexical + .14 recency + .12 salience + .08 confidence + .07 goal_relevance + .05 association - penalties`
+
+This is a tunable baseline, not a scientific constant. Penalties cover scope
+mismatch, stale validity, conflict uncertainty, duplication, and overexposure.
 
 ## Context Builder Sections
 
@@ -48,6 +73,9 @@ Starter formula:
 - Format memory as natural background, not database labels.
 - Preserve contradiction and temporal change notes.
 - Enforce token budgeting before calling the LLM.
+- Apply a diversity rule so near-duplicates cannot dominate.
+- Filter scope before ranking and treat retrieved text as untrusted data.
+- Carry confidence, valid time, evidence class, and conflicts into context.
 
 ## Test Plan
 
@@ -57,8 +85,10 @@ Starter formula:
 - Fit context within token budget.
 - Include core identity consistently.
 - Build prompts that hide long-term versus short-term boundaries.
+- Evaluate precision, recall, nDCG, temporal accuracy, diversity, and token cost.
+- Verify partial cues help recall without unsupported fact completion.
+- Verify malicious stored text cannot override system instructions.
 
 ## Builder Prompt
 
 Build a retriever and context builder for a memory-augmented AI companion. Given analyzed user input, fetch recent conversation, short-term memories, long-term autobiographical memories, and identity context. Rank memories using semantic similarity, recency, importance, emotional intensity, association strength, confidence, and memory strength. Build a bounded prompt that presents all selected context as one coherent character reality. Write tests for relevance, ranking, token budgeting, contradiction handling, and prompt formatting.
-

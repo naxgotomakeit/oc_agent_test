@@ -1,0 +1,50 @@
+flowchart TB
+    U[User: text or voice]:::userStyle --> G[Conversation Gateway<br/>auth, consent, normalization]:::ioStyle
+    G --> P[Perception and Appraisal<br/>intent, entities, time, affect, safety]:::controlStyle
+    P --> CUE[Hippocampal-inspired Cue Encoder<br/>novelty and pattern separation]:::hippoStyle
+
+    CUE --> WM[(Active Workspace<br/>recent turns, focus, goals)]:::fastStyle
+    CUE --> EP[(Episodic Ledger<br/>events and evidence)]:::memoryStyle
+    CUE --> SM[(Semantic Beliefs<br/>facts and temporal versions)]:::memoryStyle
+    CUE --> RM[(Relationship Model<br/>per user and agent)]:::affectStyle
+    CUE --> MAP[(Cognitive Map<br/>typed associations)]:::mapStyle
+
+    WM --> R[Pattern Completion and Reranking<br/>hybrid search, conflicts, diversity]:::hippoStyle
+    EP --> R
+    SM --> R
+    RM --> R
+    MAP --> R
+
+    ID[(Protected Self-Schema<br/>identity, values, boundaries)]:::stableStyle --> X[Executive Context Allocator<br/>relevance, privacy, token budget]:::controlStyle
+    AF[(Affective State<br/>bounded, decaying signals)]:::affectStyle --> X
+    PROC[(Procedural Policy<br/>skills, voice, routines)]:::stableStyle --> X
+    R --> X
+    WM --> X
+
+    X --> L[Replaceable LLM<br/>reasoning and language]:::modelStyle
+    L --> V[Prediction and Consistency Critic<br/>safety, grounding, identity, style]:::controlStyle
+    V --> OUT[Unified Reply]:::ioStyle
+    OUT --> U
+
+    V --> J[Post-turn Encoder<br/>evidence extraction and idempotent write]:::hippoStyle
+    J --> WM
+    J --> EP
+    J --> AF
+    J --> RM
+    J --> Q[[Consolidation Queue]]:::offlineStyle
+    Q --> K[Offline Replay and Consolidation<br/>cluster, abstract, deduplicate, decay]:::offlineStyle
+    K --> SM
+    K --> MAP
+    K --> EP
+
+    classDef userStyle fill:#e0f2fe,stroke:#0284c7,color:#082f49;
+    classDef ioStyle fill:#dcfce7,stroke:#16a34a,color:#052e16;
+    classDef controlStyle fill:#fef3c7,stroke:#d97706,color:#451a03;
+    classDef hippoStyle fill:#f3e8ff,stroke:#9333ea,color:#3b0764;
+    classDef fastStyle fill:#cffafe,stroke:#0891b2,color:#164e63;
+    classDef memoryStyle fill:#ede9fe,stroke:#7c3aed,color:#2e1065;
+    classDef stableStyle fill:#fee2e2,stroke:#dc2626,color:#450a0a;
+    classDef affectStyle fill:#fce7f3,stroke:#db2777,color:#500724;
+    classDef mapStyle fill:#d1fae5,stroke:#059669,color:#022c22;
+    classDef modelStyle fill:#e2e8f0,stroke:#475569,color:#0f172a;
+    classDef offlineStyle fill:#ffedd5,stroke:#ea580c,color:#431407;

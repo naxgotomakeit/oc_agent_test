@@ -4,6 +4,9 @@
 
 Extend the prototype beyond basic memory by adding persistent emotional dynamics, graph-based cognitive maps, and optional voice input/output.
 
+These are three optional extensions with separate evaluation gates; do not build
+them as one coupled subsystem.
+
 ## Emotional State
 
 Represent emotion as numerical state:
@@ -16,12 +19,18 @@ Represent emotion as numerical state:
 - Stress: 0 to 1.
 - Warmth or concern where useful.
 
+Keep appraisal separate from relationship belief. Prefer valence, arousal,
+concern, and interaction confidence. “Attachment” is unsafe as an optimization
+target and must never drive dependency or exclusivity.
+
 Update rules:
 
 - Apply small deltas from each interaction.
 - Clamp all values to valid ranges.
 - Decay toward baseline over time.
 - Use emotional state to influence tone, not to override task usefulness.
+- Use deterministic bounded reducers, maximum per-event deltas, elapsed-time
+  decay toward a baseline, and a reducer version.
 
 ## Cognitive Map
 
@@ -54,9 +63,11 @@ Graph relationships:
 
 Recommended stack:
 
-- Neo4j for advanced prototype.
+- PostgreSQL typed edges for the first graph prototype.
 - Keep graph retrieval optional and additive.
 - Do not let graph facts overwrite immutable identity.
+- Start with PostgreSQL typed edges; adopt Neo4j only after it wins evaluations.
+- Give every edge scope, confidence, valid time, and evidence; bound traversal.
 
 ## Voice Extension
 
@@ -76,6 +87,17 @@ Requirements:
 - Voice should call the same backend chat pipeline.
 - Store transcripts, not only audio blobs.
 - Clean text before TTS.
+- Preserve STT confidence and let users correct low-confidence spans.
+- Define interruption, partial-turn, replay, retention, and deletion semantics.
+- Do not retain raw audio by default.
+
+```mermaid
+flowchart TB
+    A[Appraisal event] --> R[Bounded reducer] --> S[(Versioned affect state)]
+    E[Evidence-backed memory] --> X[Typed edge] --> Q[Bounded graph retrieval]
+    M[Microphone] --> T[STT + confidence] --> C[Canonical text chat pipeline]
+    C --> O[Final safe text] --> V[TTS]
+```
 
 ## Test Plan
 
@@ -85,8 +107,16 @@ Requirements:
 - Graph retrieval does not create false facts.
 - STT produces usable text for the normal pipeline.
 - TTS receives final user-safe text only.
+- Prove extreme input cannot produce a dramatic one-turn personality shift.
+- Measure graph benefit over vector/full-text retrieval on labeled cases.
+- Verify deletion covers transcript, derived memories, and authorized audio.
 
 ## Builder Prompt
 
-Add advanced extensions to the dual-memory AI companion. Implement numerical emotional state with bounded deltas, decay, and tone influence. Add optional Neo4j graph memory for people, places, projects, events, concepts, relationships, emotions, and goals. Add optional voice input through STT and voice output through TTS while keeping text chat as the canonical pipeline. Write tests for emotion stability, graph-assisted recall, graph safety, transcript handling, and voice pipeline integration.
-
+Add the extensions independently and behind feature flags. Implement a small
+numerical appraisal state with bounded deterministic deltas, decay, and subtle
+tone influence. Add evidence-backed typed graph edges in PostgreSQL and adopt a
+dedicated graph database only if evaluations justify it. Add STT/TTS adapters
+while keeping text as the canonical pipeline. Test state stability, anti-
+manipulation rules, graph retrieval quality, transcript consent/deletion, and
+voice interruption.

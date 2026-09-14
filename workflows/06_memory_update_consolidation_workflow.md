@@ -4,6 +4,21 @@
 
 After each interaction, extract useful memory candidates, update short-term memory, and periodically consolidate important patterns into long-term memory.
 
+```mermaid
+flowchart LR
+    A[Delivered turn + evidence] --> B[Candidate extraction]
+    B --> C{Policy + consent}
+    C -->|reject| D[Discard/quarantine]
+    C -->|allow| E[Deduplicate + pattern separate]
+    E --> F[(Episode/goal/state)]
+    F --> G[Outbox + replay]
+    G --> H[Proposed abstraction]
+    H --> I{Support/change/conflict?}
+    I -->|support| J[Link evidence]
+    I -->|change| K[New version; close old validity]
+    I -->|conflict| L[Keep both or ask]
+```
+
 ## Per-Turn Memory Update
 
 Inputs:
@@ -32,6 +47,9 @@ Outputs:
 - 0.8 to 1.0: strong long-term candidate.
 
 Importance should consider novelty, emotion, repetition, user relevance, agent relevance, future usefulness, and relationship significance.
+
+Salience affects accessibility and retention, not truth. Repetition of the agent's
+own output must never raise confidence in a claim about the user.
 
 ## Consolidation Pipeline
 
@@ -62,6 +80,10 @@ Do not blindly overwrite old memory. Preserve temporal change:
 
 For example, store that the user previously preferred one language but now prefers another, instead of keeping two conflicting favorites.
 
+Implement reconsolidation as append/version/link, never destructive editing.
+Summaries and beliefs retain source episode IDs. Explicit correction outranks
+older inference while audit history remains until deletion is requested.
+
 ## Test Plan
 
 - Extract important memories from emotional user messages.
@@ -70,8 +92,10 @@ For example, store that the user previously preferred one language but now prefe
 - Merge duplicates.
 - Decay stale low-importance memories.
 - Preserve temporal history for changed preferences.
+- Keep similar events distinct by date, participants, and evidence.
+- Prove model repetition cannot self-confirm and job retries are idempotent.
+- Verify deletion removes or recomputes derived records.
 
 ## Builder Prompt
 
 Build the memory extraction and consolidation subsystem. After each chat turn, analyze the user message and agent response to extract memory candidates, importance, emotional intensity, confidence, entities, associations, and possible contradictions. Store useful items in short-term memory and update goals and emotion state. Add a background consolidator that groups, summarizes, scores, deduplicates, decays, and promotes memories into long-term storage. Write tests for extraction quality, importance thresholds, duplicate merging, decay, promotion, and changed-fact handling.
-
