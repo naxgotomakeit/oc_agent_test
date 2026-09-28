@@ -1,38 +1,42 @@
 # Suggested Next Steps
 
-## Recommended next milestone
+## Current status — 2026-09-28
 
-Build one thin, testable text-chat vertical slice. Do not add Redis, Neo4j, voice,
-fine-tuning, or multiple model providers yet.
+- Local FastAPI chat page is running and connected to Claude Haiku.
+- Bruce's example YAML profile supplies the character prompt.
+- Browser-local chat history and explicit `记住：...` notes are available, with view/delete controls.
+- An optional team access-code gate protects both the chat UI flow and chat API; `render.yaml` defines a hosted prototype.
+- Not yet deployed. No personal accounts, server-side database, automatic memory extraction, or cross-device synchronization.
+
+## Recommended next implementation milestone
+
+Move from browser-local prototype data to account-scoped PostgreSQL storage so
+each team member can use their memories across devices. Keep Redis, Neo4j, voice,
+fine-tuning, and multiple model providers out until there is a measured need.
 
 ```mermaid
 flowchart LR
-    A[Approve schemas and persona] --> B[Scaffold FastAPI + PostgreSQL]
-    B --> C[Protected identity loader]
-    C --> D[Append-only turns + recent context]
-    D --> E[Structured memory extraction]
-    E --> F[Hybrid retrieval + context budget]
-    F --> G[Chat response + post-turn outbox]
-    G --> H[Scenario evals and memory controls]
+    A[Publish local baseline for team] --> B[Add individual sign-in]
+    B --> C[PostgreSQL scoped per person]
+    C --> D[Append-only turns + explicit memories]
+    D --> E[Evidence-backed extraction]
+    E --> F[Relevant memory retrieval]
+    F --> G[Chat response + deletion controls]
+    G --> H[Isolation and continuity scenarios]
 ```
 
 ## First implementation backlog
 
-1. Convert `prototypes/test_self.YAML` into a validated `AgentProfile` Pydantic
-   schema and publish it as profile version 1.
-2. Scaffold `src/` and `tests/` using the module boundaries in `architecture.md`.
-3. Add Docker Compose with PostgreSQL 16 + pgvector and Alembic migrations for
-   profiles, turns, memory items/evidence, belief versions, state, and outbox.
-4. Implement `POST /v1/conversations/{id}/turns` with request idempotency and SSE
-   response streaming.
-5. Implement recent-turn context only; establish latency and continuity baselines.
-6. Add structured, evidence-backed extraction into episodic memories. Reject
-   unsupported inferences and respect a per-turn `remember=false` flag.
-7. Add full-text + vector candidate retrieval, deterministic reranking, diversity,
-   conflict notes, and a hard context-token budget.
-8. Add a post-turn transactional outbox and an idempotent consolidation worker.
-9. Add `GET/PATCH/DELETE /v1/memories` for inspection, correction, and forgetting.
-10. Run the scenario suite before adding any advanced infrastructure.
+1. Deploy the current invite-code prototype to a private team URL.
+2. Convert the YAML persona into a validated, versioned `AgentProfile`.
+3. Add individual accounts and PostgreSQL migrations for profiles, turns, memories,
+   and evidence, with every query scoped to the authenticated user.
+4. Move explicit memories from browser storage into the scoped database and add
+   inspect, correction, export, and deletion controls.
+5. Add structured, evidence-backed memory extraction and hybrid retrieval.
+6. Add idempotent post-turn writes and the consolidation outbox.
+7. Evaluate identity protection, temporal updates, duplicate separation, and
+   zero cross-user retrieval before expanding infrastructure.
 
 ## Five must-pass scenarios
 
@@ -52,4 +56,3 @@ flowchart LR
   semantics are reliable.
 - Consider fine-tuning only after prompt/retrieval errors are separated from model
   style errors with evaluation data.
-
