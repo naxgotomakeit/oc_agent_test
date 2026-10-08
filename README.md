@@ -1,4 +1,8 @@
-# Bruce 团队测试网页
+# 间隙 Interspace · OC 平台原型
+
+当前首页已扩展为 OC 平台：接待站、角色广场、人物档案、我的角色、创作中心和个人中心。详见 [平台验收说明](PLATFORM_REVIEW.md)。
+
+Bruce 原有聊天保留在 `/static/bruce.html`，首页与角色档案均可进入。平台收藏和角色草稿仅保存在当前浏览器；账号、发布和支付尚未接入。
 
 这个项目把 Bruce 的角色设定、聊天网页和 FastAPI 后端连在一起。网页与后端由同一个 Python 服务运行；浏览器不直接接触 Anthropic API Key。
 
