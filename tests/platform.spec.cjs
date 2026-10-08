@@ -9,6 +9,8 @@ const assert = require('node:assert/strict');
  await page.goto(base);await page.evaluate(()=>{localStorage.clear();localStorage.setItem('littlemind-bruce-local-chat-v1',JSON.stringify([{role:'user',content:'旧对话'}]));});await page.reload();
  await page.getByRole('heading',{name:'在世界的间隙，'}).count();
  assert.equal(await page.locator('.card').count(),3);
+ assert.equal(await page.locator('body').getAttribute('data-scene'),'home');
+ for(const scene of ['home','chat','explore','space','studio']){const asset=await context.request.get(base+'/static/assets/interspace/'+scene+'.png');assert.equal(asset.status(),200);assert(asset.headers()['content-type'].includes('image/png'));}
  await page.screenshot({path:(process.env.SCREENSHOT_DIR||'/tmp')+'/interspace-desktop.png',fullPage:true});
  await page.getByRole('button',{name:'随便遇见一个'}).click();assert(await page.locator('dialog').isVisible());await page.locator('dialog a').click();assert(page.url().includes('/character/'));assert(!(await page.locator('dialog').isVisible()));
  await page.goto(base+'/#/explore');await page.getByLabel('搜索角色').fill('Bruce');assert.equal(await page.locator('.card').count(),1);
@@ -24,7 +26,7 @@ const assert = require('node:assert/strict');
  await page.route('**/api/v1/chat',async r=>{const data=r.request().postDataJSON();assert.equal(data.messages.at(-1).content,'测试回复');await r.fulfill({contentType:'text/event-stream',body:'data: {"text":"测试成功"}\n\ndata: [DONE]\n\n'});});
  await page.goto(base+'/static/bruce.html');assert(await page.locator('#messages').getByText('旧对话',{exact:true}).isVisible());await page.getByLabel('输入消息').fill('测试回复');await page.getByRole('button',{name:'发送消息',exact:true}).click();await page.getByText('测试成功',{exact:true}).waitFor();
  await page.getByLabel('输入消息').fill('记住：我喜欢茶');await page.getByRole('button',{name:'发送消息',exact:true}).click();await page.locator('#memory-button').click();assert(await page.getByText('我喜欢茶',{exact:true}).isVisible());
- const isolated=await browser.newContext();const second=await isolated.newPage();await second.goto(base+'/#/mine?tab=favorites');assert(await second.getByText('还没有收藏的角色').isVisible());await isolated.close();
+ const isolated=await browser.newContext();const second=await isolated.newPage();await second.goto(base+'/#/mine?tab=favorites');await second.getByText('还没有收藏的角色').waitFor();await isolated.close();
  await page.setViewportSize({width:390,height:844});
  for(const route of ['/home','/explore','/character/bruce','/mine','/studio','/account','/space/bruce','/unknown']){await page.goto(base+'/#'+route);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`overflow: ${route}`);}
  await page.goto(base+'/#/home');await page.screenshot({path:(process.env.SCREENSHOT_DIR||'/tmp')+'/interspace-mobile.png',fullPage:true});

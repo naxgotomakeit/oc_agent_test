@@ -1,0 +1,107 @@
+/* Shared Interspace art layer. Layout and API/storage contracts stay in their original files. */
+:root{color-scheme:dark;--bg:#090c17;--canvas:#090c17;--paper:#141929ed;--ink:#eeedf7;--muted:#b0aec5;--line:#42435e;--accent:#eed0ad;--lime:#273d3b;--radius:2px;--purple:#b6a7e1;--purple-dark:#d0bfe9}
+body{background:var(--bg);color:var(--ink);isolation:isolate;--scene:none;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+body[data-scene="home"]{--scene:url('/static/assets/interspace/home.png')}
+body[data-scene="chat"]{--scene:url('/static/assets/interspace/chat.png')}
+body[data-scene="explore"]{--scene:url('/static/assets/interspace/explore.png')}
+body[data-scene="space"]{--scene:url('/static/assets/interspace/space.png')}
+body[data-scene="studio"]:before{background-position:center calc(100% - 260px)}
+body[data-scene="studio"]{--scene:url('/static/assets/interspace/studio.png')}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:var(--scene);background-size:cover;background-position:center bottom;background-repeat:no-repeat;image-rendering:pixelated}
+button,input,textarea,select{color:var(--ink)}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #eed0ad;outline-offset:4px}
+::selection{background:#645882;color:#fff}
+input::placeholder,textarea::placeholder{color:#a4a0bb;opacity:1}
+button,a,input,textarea,select{-webkit-tap-highlight-color:#b6a7e130}
+.platform .header{background:#0d1020b8;border-color:#42435e80}
+.platform .brand-symbol{font-size:0;width:24px;height:24px;background:#b6a7e1;clip-path:polygon(25% 0,75% 0,75% 25%,100% 25%,100% 75%,75% 75%,75% 100%,25% 100%,25% 75%,0 75%,0 25%,25% 25%);box-shadow:inset -8px -4px #736887}
+.platform .header nav a.active{color:var(--accent);box-shadow:0 3px var(--accent)}
+.platform .account{border-radius:0;background:#25283e;box-shadow:3px 3px #070a14}
+.platform h1,.platform h2,.platform h3{color:var(--ink)}
+.platform h1{letter-spacing:-1px;text-shadow:3px 3px #080b17}
+.platform .eyebrow:before{border-radius:0;background:var(--accent);box-shadow:3px 3px #eed0ad24}
+.platform .eyebrow,.platform .art-label{color:#c1b4d9}
+.platform .hero-art{background:none;border:0;border-radius:0;overflow:visible}
+.platform .art-label{bottom:10px;left:auto;right:0;text-align:right;line-height:2.3;letter-spacing:2px}
+.platform .button,.platform .tabs button{border-radius:0;background:#171b2de8;box-shadow:3px 3px #060913;padding:12px 23px}
+.platform .button.primary{background:var(--accent);border-color:var(--accent);color:#1b1822;box-shadow:3px 3px #856951}
+.platform .button:hover,.platform .tabs button:hover{filter:none;border-color:#c0afd9;background:#303049}
+.platform .button.primary:hover{background:#ffe0bc;color:#171522}
+.platform .button:active{transform:translate(2px,2px);box-shadow:1px 1px #060913}
+.platform .text-link{color:#d2c0ea}
+.platform .feature,.platform .card,.platform .panel,.platform .empty{border-radius:2px;background:var(--paper);border-color:var(--line);box-shadow:4px 4px #06091388}
+.platform .card:hover{border-color:#ab9bc9}
+.platform .portrait{border-radius:0;background:linear-gradient(145deg,#22263c,#151a2c);border:1px solid #44425f}
+.platform .portrait span{border-radius:0;border:2px solid #776a96;background:#25283f;color:#d7c9ee;font-family:ui-monospace,monospace;box-shadow:6px 6px #0b0f20,-4px -4px #33354f}
+.platform .portrait:after{color:#b0aec5}
+.platform .tag{border-radius:0;background:#1a1e31;color:#c6c2d8}
+.platform .tag.live{background:#243c38;border-color:#527a70;color:#c3e1cd}
+.platform .favorite{color:#e6c6b1}
+.platform .theme,.platform .theme:nth-child(2){border-radius:2px;background:#1b2034ed;border:1px solid #49415d;box-shadow:4px 4px #06091388}
+.platform .theme:nth-child(2){background:#272033eb}
+.platform input,.platform select,.platform textarea{border-radius:0;background:#0e1424;border-color:#52506a;color:var(--ink)}
+.platform .tabs button.active{background:#b6a7d9;color:#181526;border-color:#c3b4e6}
+.platform .notice{background:#272439;border-color:#b6a7d9;color:#d1c7de}
+.platform .footer{background:#090d19ad;border-color:#42435e80}
+.platform .guide button,.platform #guide-restore{border-radius:0;background:#1d2236;color:var(--ink);box-shadow:3px 3px #060913}
+.platform .guide-face{border-radius:0;background:#39344f;color:#e1d1ec}
+.platform #guide-panel{border-radius:0;background:#171b2f;border-color:#706080;box-shadow:5px 5px #060913}
+.platform #toast{border-radius:0;background:#e6d6bf;color:#1d1a28;box-shadow:4px 4px #090c17}
+.platform dialog{border-radius:0;background:#171b2f;border-color:#706080;box-shadow:6px 6px #060913}
+.platform dialog::backdrop{background:#030612bd}
+.platform .skip:focus{background:#242a41;color:white}
+/* Bruce keeps its existing sidebar, stream, composer and memory controls. */
+.chat-page .sidebar{background:#0e1323ed;border-color:var(--line)}
+.chat-page .main-panel{background:transparent;height:100dvh}
+.chat-page .topbar{background:#111627de;border-color:var(--line)}
+.chat-page .brand,.chat-page h1,.chat-page .overlay-card h2,.chat-page .breadcrumb strong{color:var(--ink)}
+.chat-page .brand-name span,.chat-page h1 em{color:#c7b4e6}
+.chat-page .brand-mark,.chat-page .overlay-mark{border-radius:0;background:#504568;color:#f3eaf8;box-shadow:3px 3px #080b17}
+.chat-page .new-chat,.chat-page .workspace-card,.chat-page .prompt-card,.chat-page .icon-button,.chat-page .memory-button,.chat-page .local-pill{border-radius:0;background:#1a2033ed;border-color:var(--line);color:#e0daed}
+.chat-page .new-chat:hover,.chat-page .prompt-card:hover,.chat-page .icon-button:hover{background:#2a2b43;border-color:#b2a0d0;box-shadow:3px 3px #080b17;transform:none}
+.chat-page .workspace-card strong,.chat-page .profile-mini strong,.chat-page .prompt-card strong{color:#e0d9ed}
+.chat-page .workspace-card small,.chat-page .profile-mini small,.chat-page .prompt-card small,.chat-page .side-label,.chat-page .sidebar-note,.chat-page .shortcut,.chat-page .welcome-copy,.chat-page .composer-hint,.chat-page .disclaimer,.chat-page .message-name,.chat-page .breadcrumb,.chat-page .logout-button{color:var(--muted)}
+.chat-page .conversation-item{border-radius:0;color:var(--muted)}
+.chat-page .conversation-item.active{background:#302b47;color:#e0d3ef;box-shadow:inset 3px 0 #c1addf}
+.chat-page .hero-avatar,.chat-page .mini-avatar,.chat-page .message-avatar,.chat-page .user .message-avatar{border-radius:0;background:#38304f;color:#e7dbf4;box-shadow:3px 3px #080b17}
+.chat-page .orbit{border-radius:0;border-color:#75628d;transform:rotate(45deg)}
+.chat-page .orbit-two{border-color:#39334f;transform:rotate(0deg)}
+.chat-page .eyebrow{color:#c4b5dc}
+.chat-page .eyebrow span,.chat-page .dot,.chat-page .local-pill span,.chat-page .typing i{border-radius:0}
+.chat-page .prompt-icon,.chat-page .workspace-icon{border-radius:0;background:#38314f;color:#c9b9eb}
+.chat-page .prompt-icon.peach,.chat-page .prompt-icon.butter{background:#463647;color:#efcaab}
+.chat-page .prompt-icon.mint{background:#273c3d;color:#b2d0c6}
+.chat-page .message-text{background:#181f32f5;border-color:#49435f;color:#eeeaf5;border-radius:0;box-shadow:3px 3px #070b17;font-size:14px}
+.chat-page .user .message-text{background:#37304df5;border-color:#76628c;color:#f0e7f6;border-radius:0}
+.chat-page .message-text.error-message{background:#382533;border-color:#9d6778;color:#ffd0ce}
+.chat-page .composer{background:#141b2df5;border-color:#726184;border-radius:0;box-shadow:4px 4px #070b17}
+.chat-page .composer:focus-within{border-color:#eed0ad;box-shadow:4px 4px #070b17}
+.chat-page .composer textarea{color:#eeeaf5;font-size:14px}
+.chat-page .composer textarea::placeholder{color:#b0aec5}
+.chat-page .send-button,.chat-page .gate-submit{background:#eed0ad;color:#211b29;border-radius:0;box-shadow:2px 2px #826950}
+.chat-page .send-button:hover,.chat-page .gate-submit:hover{background:#ffe0bc}
+.chat-page .send-arrow,.chat-page .enter-icon,.chat-page .memory-button b{border-radius:0}
+.chat-page .memory-button b{background:#39314f;color:#e7d5f6}
+.chat-page .overlay{background:#030611ba}
+.chat-page .overlay-card{background:#171d30;border-color:#726184;border-radius:0;box-shadow:6px 6px #070b17}
+.chat-page .overlay-card>p,.chat-page .overlay-card label,.chat-page .memory-row{color:#c6bfd6}
+.chat-page .overlay-card input{border-radius:0;background:#0d1323;border-color:#5e526f;color:#eeedf7}
+.chat-page .memory-empty{border-radius:0;background:#101627;border-color:#5e526f;color:#b0aec5}
+.chat-page .memory-row{border-color:#42435e}
+.chat-page .memory-remove,.chat-page .clear-memories,.chat-page .access-error{color:#efb4b7}
+.chat-page .dialog-close{border-radius:0;color:#d1c0e2}
+.chat-page .dialog-close:hover{background:#38304f}
+.chat-page .breadcrumb a{color:#cbbade;text-decoration:none}
+.chat-page .chat-scroll{scrollbar-color:#625776 transparent}
+@media(max-width:560px){
+ body:before{background-size:auto 100%;background-position:right bottom}
+ body[data-scene="space"]:before{background-position:left bottom}
+ body[data-scene="chat"]:before{background-position:center bottom}
+ body[data-scene="studio"]:before{background-position:right bottom}
+ .platform .hero-art{height:150px;border-radius:0}
+ .platform .art-label{bottom:0;font-size:9px}
+ .platform .header{background:#0d1020e8}
+ .platform .button,.platform .tabs button{padding:10px 16px}
+ .chat-page .welcome-copy{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
