@@ -7,12 +7,17 @@ const assert = require('node:assert/strict');
  const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
  const base=process.env.BASE_URL||'http://127.0.0.1:8000';
  await page.goto(base);await page.evaluate(()=>{localStorage.clear();localStorage.setItem('littlemind-bruce-local-chat-v1',JSON.stringify([{role:'user',content:'旧对话'}]));});await page.reload();
- await page.getByRole('heading',{name:'在世界的间隙，'}).count();
+ await page.locator('.hero-copy h1').waitFor();
+ assert.equal(await page.getByText('今天想遇见什么样的人').count(),0);
+ for(const img of await page.locator('.portrait-image img, .hero-character img').all()){await img.scrollIntoViewIfNeeded();await img.evaluate(el=>el.decode());assert(await img.evaluate(el=>el.naturalWidth>0));}
+ await page.evaluate(()=>document.fonts.ready);
+ assert(await page.evaluate(()=>document.fonts.check('500 16px \"Noto Serif SC\"')));
+ await page.evaluate(()=>scrollTo(0,0));
  assert.equal(await page.locator('.card').count(),3);
  assert.equal(await page.locator('body').getAttribute('data-scene'),'home');
  for(const scene of ['home','chat','explore','space','studio']){const asset=await context.request.get(base+'/static/assets/interspace/'+scene+'.png');assert.equal(asset.status(),200);assert(asset.headers()['content-type'].includes('image/png'));}
  await page.screenshot({path:(process.env.SCREENSHOT_DIR||'/tmp')+'/interspace-desktop.png',fullPage:true});
- await page.getByRole('button',{name:'随便遇见一个'}).click();assert(await page.locator('dialog').isVisible());await page.locator('dialog a').click();assert(page.url().includes('/character/'));assert(!(await page.locator('dialog').isVisible()));
+ await page.getByRole('button',{name:'随机相遇 ↗'}).click();assert(await page.locator('dialog').isVisible());await page.locator('dialog a').click();assert(page.url().includes('/character/'));assert(!(await page.locator('dialog').isVisible()));
  await page.goto(base+'/#/explore');await page.getByLabel('搜索角色').fill('Bruce');assert.equal(await page.locator('.card').count(),1);
  await page.getByRole('button',{name:'收藏 Bruce',exact:true}).click();assert.equal(await page.getByLabel('搜索角色').inputValue(),'Bruce');
  await page.goto(base+'/#/mine?tab=favorites');assert.equal(await page.locator('.card').count(),1);

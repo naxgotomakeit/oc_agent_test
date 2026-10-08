@@ -1,0 +1,136 @@
+@import url('/static/assets/fonts/body.css');
+@import url('/static/assets/fonts/display.css');
+/* A quieter character-led layout: typography and imagery carry the hierarchy. */
+:root{--ink:#f0eef4;--muted:#a6a5b8;--line:#ffffff20;--paper:#111523e8;--accent:#e5d4bc}
+body,button,input,textarea,select{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;font-weight:400}
+.platform .header{max-width:1280px;height:86px;padding:0 48px;border-bottom:1px solid #ffffff12;background:transparent;gap:32px}
+.platform .brand{gap:14px}
+.brand-word,.chat-page .brand-name{font-family:'Noto Serif SC','Songti SC',serif;font-weight:600;letter-spacing:.16em;font-size:27px;line-height:1.4}
+.platform .brand small{font-size:8px;letter-spacing:3px;color:#aaa8bb}
+.platform .header nav{gap:30px;font-size:12px}
+.platform .header nav a{padding:10px 0;color:#aaa8bb;transition:color .2s}
+.platform .header nav a.active{color:#f0e2cb;box-shadow:0 1px #dac4a6}
+.platform .account{border:1px solid #ffffff25;background:#1b1d2c;box-shadow:none;width:30px;height:30px;font-size:11px}
+.platform main{max-width:1220px;padding:36px 48px 72px}
+.platform .eyebrow{font-size:9px;font-weight:500;letter-spacing:2.8px;color:#b5aac7;line-height:1.8}
+.platform .eyebrow:before{width:3px;height:3px;box-shadow:none}
+.platform h1,.platform h2,.platform h3{letter-spacing:0;text-shadow:none;font-weight:500}
+.platform .page-head h1,.platform .detail-copy h1{font-family:'Noto Serif SC',serif;font-size:38px;line-height:1.4;margin:18px 0}
+.platform .page-head{margin:18px 0 32px;max-width:650px}
+.platform .intro{font-size:13px;line-height:1.95;max-width:520px}
+.platform .landing-hero{grid-template-columns:1fr 390px;gap:70px;min-height:460px;align-items:center;padding:0 0 25px}
+.platform .hero-copy{padding:15px 0 35px}
+.platform .hero-copy h1{font-family:'Noto Serif SC',serif;font-size:108px;font-weight:500;letter-spacing:.12em;line-height:1.3;margin:12px 0 14px;color:#f1ecdf}
+.title-dot{font-family:Georgia,serif;color:#c2acd5;letter-spacing:0;font-size:.65em;margin-left:-.1em}
+.platform .edition{font-size:9px;color:#8e899f;letter-spacing:2px}
+.platform .hero-statement{font-family:'Noto Serif SC',serif;font-size:21px;letter-spacing:.14em;color:#d4cddd;margin:0 0 17px}
+.platform .hero-caption{color:#9e9aaf;font-size:12px;letter-spacing:.07em;margin:0;line-height:1.9}
+.platform .hero-copy .actions{margin:29px 0 0;gap:14px}
+.platform .button{padding:11px 20px;font-size:12px;letter-spacing:.04em;border:1px solid #ffffff30;background:#151827c9;box-shadow:none;border-radius:2px;gap:20px;min-height:42px}
+.platform .button.primary{background:#e5d4bc;border-color:#e5d4bc;color:#272230;box-shadow:none}
+.platform .button:hover{background:#262338;border-color:#b8a5cc}
+.platform .button.primary:hover{background:#f0dfc9;border-color:#f0dfc9}
+.platform .text-link{font-size:11px;color:#beb3cd;text-decoration:none;letter-spacing:.03em}
+.platform .text-link:hover{color:#f2dfc7}
+.hero-character{height:450px;position:relative;display:block;overflow:hidden;isolation:isolate;background:linear-gradient(160deg,#29263888,#15172500 68%);border-top:1px solid #ffffff26}
+.hero-character:after{content:"";position:absolute;z-index:0;inset:50% 0 0;background:linear-gradient(transparent,#0c101ef5 82%);pointer-events:none}
+.hero-character>img{position:absolute;width:100%;height:auto;top:-12px;left:0;z-index:-1;filter:drop-shadow(0 6px 25px #0a0a1b)}
+.hero-character-index{position:absolute;left:20px;top:17px;font-size:8px;letter-spacing:2px;color:#b6a5c5;writing-mode:vertical-rl;z-index:1}
+.hero-character-caption{position:absolute;left:27px;right:25px;bottom:36px;display:flex;justify-content:space-between;align-items:center;z-index:2}
+.hero-character-caption small{font-size:9px;letter-spacing:.12em;color:#c2b5d2}
+.hero-character-caption strong{display:block;font-family:Georgia,'Noto Serif SC',serif;font-size:38px;font-weight:400;line-height:1.4;color:#f5ece1}
+.hero-character-caption div>span{font-size:11px;color:#bab4c8}
+.hero-enter{height:38px;width:38px;display:grid;place-items:center;border:1px solid #b0a3be70;color:#eee4f6;font-size:19px}
+.hero-art-note{position:absolute;bottom:10px;left:27px;z-index:2;color:#8d859d;font-size:8px;letter-spacing:.07em}
+.platform .directory-section{margin-top:20px;padding-top:29px;border-top:1px solid #ffffff19}
+.platform .section-heading{margin-bottom:22px;align-items:flex-end}
+.platform .section-heading h2{font-family:'Noto Serif SC',serif;font-size:26px;letter-spacing:.07em;margin:5px 0 0}
+.directory-actions{display:flex;gap:24px;align-items:center;padding-bottom:4px}
+.platform .cards{gap:24px}
+.platform .card{padding:0;background:#111524ed;border:1px solid #ffffff16;box-shadow:none;border-radius:2px;overflow:hidden;transition:border-color .2s,transform .2s}
+.platform .card:hover{border-color:#a89abc77;transform:translateY(-3px)}
+.platform .card>a{display:block}
+.platform .portrait{border:0;border-radius:0;position:relative;height:280px;background:#252535}
+.platform .portrait-image{background:linear-gradient(140deg,#393746,#1c2634)}
+.platform .portrait-image[data-art="hijikata"]{background:linear-gradient(140deg,#363445,#252432)}
+.platform .portrait-image[data-art="okita"]{background:linear-gradient(140deg,#494046,#282a39)}
+.platform .portrait-image:after{display:none}
+.platform .portrait-image img{position:absolute;width:138%;max-width:none;height:auto;top:-27px;left:-19%;display:block;transition:transform .35s}
+.platform .card:hover .portrait-image img{transform:scale(1.025)}
+.platform .art-credit{position:absolute;right:10px;bottom:9px;font-size:8px;letter-spacing:.04em;color:#ddd6e2;background:#0a0e1bc4;padding:3px 6px;z-index:2}
+.platform .card-body{padding:20px 22px 14px}
+.platform .card-top{align-items:center;margin-bottom:4px}
+.platform .card h3{font-family:'Noto Serif SC',Georgia,serif;font-size:22px;line-height:1.4;margin:0 0 8px;color:#e9e2f0}
+.platform .tag{font-size:9px;padding:2px 7px;line-height:1.6;border:0;background:#242438;color:#b6aec6;letter-spacing:.03em}
+.platform .tag.live{background:#283831;color:#c0d5c8}
+.platform .card p{font-size:12px;line-height:1.9;min-height:46px;margin:10px 0 15px;color:#afabc0}
+.platform .card-bottom{border-color:#ffffff12;padding-top:10px}
+.platform .card-bottom small{font-size:9px;color:#8f899f}
+.platform .favorite{font-size:20px;color:#c7b1c6}
+.platform .panel,.platform .feature,.platform .empty{border-color:#ffffff20;box-shadow:none;background:#121625eb;border-radius:3px}
+.platform .feature{grid-template-columns:84px 1fr auto;padding:20px;gap:24px}
+.platform .feature .portrait{height:110px}
+.platform .feature .portrait img{width:170%;left:-35%;top:0}
+.platform .feature .art-credit{display:none}
+.platform .panel{padding:25px}
+.platform .panel h3{font-size:17px;line-height:1.7}
+.platform .panel p{font-size:13px;line-height:1.9}
+.platform .detail-grid{grid-template-columns:.85fr 1.15fr;gap:54px}
+.platform .detail-grid>.portrait{height:550px}
+.platform .detail-grid>.portrait img{width:105%;left:-2.5%;top:0}
+.platform .detail-copy{padding-top:16px}
+.platform .detail-copy .panel{margin-top:20px}
+.platform .tabs button{padding:8px 17px;font-size:12px;box-shadow:none;border-color:#ffffff25}
+.platform .tabs button.active{background:#c0b1d1;color:#201d29}
+.platform input,.platform textarea,.platform select{border-radius:2px;font-size:12px;border-color:#ffffff25;background:#0c1120}
+.platform .form-grid label{font-size:12px;color:#d1cadc}
+.platform .notice{font-size:11px;line-height:1.8}
+.platform .portrait-empty{height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#161b2c;border:1px dashed #ffffff25}
+.platform .portrait-empty span{font-family:'Noto Serif SC',serif;font-size:40px;width:auto;height:auto;border:0;background:none;box-shadow:none;color:#82788f}
+.platform .portrait-empty:after{display:none}
+.platform .portrait-empty small{font-size:10px;color:#8c849c}
+.platform .footer{max-width:1124px;padding:24px 0 45px;margin:0 auto;font-size:10px;border-color:#ffffff18;background:none;gap:22px}
+.platform .footer .brand-word{font-size:22px}
+.platform .footer span:last-child{font-size:9px;color:#888399}
+.platform .guide{bottom:18px;right:20px}
+.platform #guide-toggle{padding:7px 10px;font-size:10px;background:#141929e8;box-shadow:none}
+.platform .guide-face{padding:3px 6px;font-size:10px;background:#302b40}
+.platform #guide-hide{padding:5px 8px;font-size:12px;box-shadow:none;background:#141929e8}
+.chat-page .brand-name{font-size:25px;letter-spacing:.1em}
+.chat-page .brand-name span{font-family:'Noto Sans SC',sans-serif;font-size:9px;letter-spacing:0}
+.chat-page .sidebar{padding-top:28px}
+.chat-page .hero-orbit{width:96px;height:110px;margin-bottom:20px}
+.chat-page .hero-avatar{width:86px;height:110px;overflow:hidden;border-radius:3px;background:#333140;box-shadow:none}
+.chat-page .hero-avatar img{width:172%;position:absolute;left:-36%;top:-7px;height:auto}
+.chat-page .orbit{display:none}
+.chat-page h1{font-family:Georgia,'Noto Serif SC',serif;font-size:46px;font-weight:400;letter-spacing:.02em}
+.chat-page .welcome-copy{font-size:13px;line-height:1.9;color:#aaa4bb}
+.chat-page .prompt-card{background:#141a2bea;border-color:#ffffff23;border-radius:3px;padding:14px;min-height:75px}
+.chat-page .prompt-card strong{font-size:12px;font-weight:500}
+.chat-page .prompt-card small{font-size:10px}
+.chat-page .composer{border-radius:3px;box-shadow:none;background:#101626f5;border-color:#776985}
+.chat-page .message-text,.chat-page .user .message-text{border-radius:3px;box-shadow:none;line-height:1.9}
+.chat-page .send-button{box-shadow:none;border-radius:2px;padding:0 13px;height:34px;font-size:11px}
+.chat-page .overlay-card h2{font-family:'Noto Serif SC',serif;letter-spacing:.04em}
+@media(max-width:1000px){.platform .landing-hero{grid-template-columns:1fr 330px;gap:30px}.platform .hero-copy h1{font-size:90px}.hero-character{height:420px}.platform .footer{margin:0 36px}.platform .header{padding:0 36px}.platform main{padding:30px 36px 60px}}
+@media(max-width:760px){.platform .landing-hero{grid-template-columns:1fr 270px;gap:20px}.platform .hero-copy h1{font-size:74px}.platform .hero-statement{font-size:17px}.hero-character{height:370px}.platform .cards{gap:16px}.platform .card-body{padding:16px}.platform .header nav{gap:20px}.platform .detail-grid{gap:28px}.platform .detail-grid>.portrait{height:420px}.chat-page h1{font-size:36px}.chat-page .hero-orbit{margin-bottom:14px}.chat-page .prompt-card{padding:10px;min-height:68px}.chat-page .prompt-card strong{font-size:11px}.chat-page .prompt-card small{font-size:9px}}
+@media(max-width:560px){
+ .platform .header{padding:18px 22px 0;height:auto;gap:12px;background:#0b0f1bd9}
+ .platform .brand-word{font-size:25px}.platform .header nav{padding:5px 0 0;gap:14px;font-size:11px}
+ .platform .header nav a{padding:10px 0 13px}.platform .brand small{font-size:7px;letter-spacing:2px}
+ .platform main{padding:25px 22px 50px}.platform .landing-hero{grid-template-columns:1fr;gap:24px;padding:0 0 24px;min-height:0}
+ .platform .hero-copy{padding:8px 0 0}.platform .hero-copy h1{font-size:78px;margin:4px 0 12px}
+ .platform .hero-statement{font-size:18px;margin-bottom:12px}.platform .hero-caption{font-size:11px}
+ .platform .hero-copy .actions{margin-top:22px;gap:10px}.platform .button{padding:10px 15px;font-size:11px;gap:14px}
+ .hero-character{height:310px;margin:0 0 0 35px}.hero-character>img{width:85%;left:14%;top:-17px}
+ .hero-character-caption{left:20px;right:18px;bottom:34px}.hero-character-caption strong{font-size:31px}.hero-character-caption div>span{font-size:10px}.hero-art-note{left:20px;font-size:7px}
+ .platform .directory-section{margin-top:14px;padding-top:24px}.platform .section-heading h2{font-size:23px}.directory-actions{gap:14px}.directory-actions .text-link{font-size:10px}
+ .platform .cards{grid-template-columns:1fr;gap:22px}.platform .portrait{height:310px}.platform .portrait-image img{width:125%;left:-12.5%;top:-20px}
+ .platform .card-body{padding:18px 20px 14px}.platform .card p{min-height:0}.platform .card h3{font-size:23px}
+ .platform .page-head h1,.platform .detail-copy h1{font-size:30px}.platform .intro{font-size:12px}.platform .page-head{margin-top:6px}
+ .platform .detail-grid{grid-template-columns:1fr;gap:20px}.platform .detail-grid>.portrait{height:380px}.platform .detail-grid>.portrait img{width:105%;left:-2.5%}
+ .platform .feature{grid-template-columns:70px 1fr;gap:17px}.platform .feature>.button{grid-column:2}.platform .feature .portrait{height:90px}
+ .platform .footer{margin:0 22px;padding:22px 0 80px;gap:15px;flex-wrap:wrap}.platform .footer span:last-child{width:100%;font-size:8px}
+ .platform .guide{bottom:12px;right:12px}.platform .guide-face{display:none}.platform #guide-toggle{font-size:9px;padding:7px}
+ .platform .panel{padding:20px}.chat-page .welcome-copy{font-size:12px}
+}
